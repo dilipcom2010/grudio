@@ -3,7 +3,7 @@
 		"host":"http://127.0.0.1:8888/"
 	},
 	"production":{
-		"host":"http://www.grudio.com/"
+		"host":"http://35.154.133.252:8888/"
 	},
 	"song_max_length":480,
 	"song_min_length":120,

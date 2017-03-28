@@ -12,12 +12,12 @@ var startTime = 0;
 
 
 $(document).ready(function(){
+	baseurl = window.location.origin;
 	initializeRadio();
 });
 
 
 function set_var(channelid){
-	baseurl = window.location.origin;
 	categoryId = parseInt(channelid);
 }
 
