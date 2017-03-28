@@ -17,6 +17,7 @@ $(document).ready(function(){
 
 
 function set_var(channelid){
+	baseurl = window.location.origin;
 	categoryId = parseInt(channelid);
 }
 

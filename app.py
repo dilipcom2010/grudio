@@ -28,8 +28,11 @@ from controllers import radio
 
 db_config = ConfigParser()
 db_config.read("grudio_db.ini")
+mode_config = ConfigParser()
+mode_config.read("mode_config.ini")
 
-define("mode", default="dev", help="development mode or production mode")
+
+define("mode", default=mode_config["default"]["env"], help="development mode or production mode")
 define("port", default=8888, help="run on the given port", type=int)
 define("mysql_host", default=db_config["mysql"]["host"], help="mysql database host")
 define("mysql_database", default=db_config["mysql"]["database"], help="mysql database name")
