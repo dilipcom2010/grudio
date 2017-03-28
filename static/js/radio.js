@@ -42,7 +42,9 @@ function initializeRadio(){
 
 			nextSong = songs.next;
 
-			startTime = playingSong.length - playingSong.remaining;
+			if(playingSong){
+				startTime = playingSong.length - playingSong.remaining;
+			}
 			playSong(playingSong);
 		}
 	});
