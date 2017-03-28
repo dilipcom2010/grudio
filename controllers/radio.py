@@ -1,4 +1,5 @@
 from basehandler import BaseHandler
+from helper import AppHelper
 import json
 from traceback import format_exc
 
@@ -18,7 +19,7 @@ class Home(BaseHandler):
 
 
 
-class Playlist(BaseHandler):
+class Playlist(BaseHandler, AppHelper):
 	def get(self):
 		result = {}
 		error = None
@@ -47,15 +48,22 @@ class Playlist(BaseHandler):
 
 			if not self.redis.get(playing):
 				playing_song, next_song = self.redis.get(nextt), self.redis.get(queued)
-				playing_song_detail = json.loads(playing_song)
-
-				queued_song = self.getTopSongByCategory(category_id)
 				
-				if not queued_song:
-					queued_song = self.getFallbackSong(category_id)
+				if not playing_song or not next_song:
+					if not self.initializePlaylist(category_id):
+						result["error"] = "Very few songs to play"
+						self._immaturedResponse(result)
+						return
+					playing_song, next_song, queued_song = self.redis.get(playing), self.redis.get(nextt), self.redis.get(queued)
+				else:
+					queued_song = self.getTopSongByCategory(category_id)
+					if not queued_song:
+						queued_song = self.getFallbackSong(category_id)
+					queued_song = json.dumps(queued_song)
 				
-				queued_song = json.dumps(queued_song)
+				
 				try:
+					playing_song_detail = json.loads(playing_song)
 					expire = int(playing_song_detail["length"])				
 
 					self.redis.set(playing, playing_song, expire)
@@ -70,19 +78,26 @@ class Playlist(BaseHandler):
 			if playlist_type=="next":
 				result["next"] = json.loads(self.redis.get(nextt))
 			else:
-				playing_song = json.loads(self.redis.get(playing))
-				playing_song["remaining"] = int(self.redis.ttl(playing))
-				result["playing"] = playing_song
-				result["next"] = json.loads(self.redis.get(nextt))
-				result["queued"] = json.loads(self.redis.get(queued))
+				try:
+					playing_song = json.loads(self.redis.get(playing))
+					playing_song["remaining"] = int(self.redis.ttl(playing))
+					result["playing"] = playing_song
+					result["next"] = json.loads(self.redis.get(nextt))
+					result["queued"] = json.loads(self.redis.get(queued))
+				except:
+					result["error"] = "Insufficient playlist"
 
 
 
 		jsonp = self.to_json(result)
-		print jsonp
 		self.set_header('Content-Type', 'application/javascript')
 		self.write(jsonp);
 
+
+	def _immaturedResponse(self, result):
+		jsonp = self.to_json(result)
+		self.set_header('Content-Type', 'application/javascript')
+		self.write(jsonp);
 
 	def getTopSongByCategory(self, category_id):
 		sql = '''

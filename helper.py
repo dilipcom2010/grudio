@@ -1,11 +1,21 @@
 import json
 
 class AppHelper:
-	def initializePlaylist(self):
+	def initializePlaylist(self, onlyCategory=None):
 		redis_data = []
 
-		categories = self.db.query("SELECT id FROM category WHERE 1")
+		categories = []
+		if onlyCategory:
+			if type(onlyCategory) is int:
+				if self.db.query("SELECT * FROM `songs` WHERE category_id=%s HAVING count(category_id)>2 LIMIT 1", onlyCategory):
+					categories = [{"id":onlyCategory}]
+		else:	
+			categories = self.db.query("SELECT id FROM `category` WHERE id in (SELECT category_id FROM `songs` GROUP BY category_id HAVING COUNT(category_id)>2)")
 
+		
+		if not categories:
+			return False
+		
 		for category in categories:
 			sql = '''
 				SELECT s.id,
@@ -20,28 +30,10 @@ class AppHelper:
 				       s.score
 				FROM songs s, users u
 				WHERE s.file_path IS NOT NULL
-				  AND s.status="not_played"
 				  AND s.category_id=%s
 				  AND s.user_id=u.id
 				ORDER BY score DESC LIMIT 3
 			'''
-
-			# sql = '''
-			# 	SELECT id,
-			# 	       category_id,
-			# 	       user_id,
-			# 	       name,
-			# 	       length,
-			# 	       file_path,
-			# 	       thumbnail,
-			# 	       access_token,
-			# 	       score
-			# 	FROM songs
-			# 	WHERE file_path IS NOT NULL
-			# 	  AND status="not_played"
-			# 	  AND category_id=%s
-			# 	ORDER BY score DESC LIMIT 3
-			# '''
 
 			songs = self.db.query(sql, category["id"])
 
@@ -81,6 +73,8 @@ class AppHelper:
 
 		self.redis_set_bulk(redis_data)
 
+		return True
+
 	def redis_set_bulk(self, datas):
 		for data in datas:
-			self.redisdb.set(data["key"], data["value"], data["expiry"])
+			self.redis.set(data["key"], data["value"], data["expiry"])

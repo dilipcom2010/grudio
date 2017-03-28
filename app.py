@@ -80,7 +80,7 @@ class Application(tornado.web.Application, AppHelper):
 			host=options.mysql_host, database=options.mysql_database,
 			user=options.mysql_user, password=options.mysql_password)
 
-		self.redisdb = redis.StrictRedis(host=options.redis_host, port=options.redis_port, db=0)
+		self.redis = redis.StrictRedis(host=options.redis_host, port=options.redis_port, db=0)
 
 		with open("config.json") as json_file:
 				self.config = json.load(json_file)
