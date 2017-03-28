@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+
+<audio controls>
+  <source src="/songs/3a148af6-d866-4b23-843e-b3f0742790ab.webm" type="audio/ogg">
+  <source src="/songs/3a148af6-d866-4b23-843e-b3f0742790ab.webm" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+
+
+
+	<script type="text/javascript">
+		function testAjax(){
+			$.ajax({
+				url:"/songs/addNew",
+				type:"GET",
+				dataType: "json",
+				contentType: "application/json; charset=utf-8",
+				cache: false,
+				success: function(data){
+					console.log(data);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					//alert('err');
+					console.log(textStatus);
+					console.log(XMLHttpRequest);
+					//alert("Status: " + textStatus);
+					//alert("Error: " + errorThrown);
+				}
+			});
+		}
+	</script>
+
+	<div onclick="testAjax()">test</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</body>
+</html>

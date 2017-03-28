@@ -1,0 +1,27 @@
+{
+	"dev":{
+		"host":"http://127.0.0.1:8888/"
+	},
+	"production":{
+		"host":"http://www.grudio.com/"
+	},
+	"song_max_length":480,
+	"song_min_length":120,
+	"likes_limit":100,
+	"dislike_limit":100,
+	"song_hate_ratio":40,
+	"likes_per_point":1000,
+	"track_rating_action_lock_period":86400,
+	"track_replay_lock":86400,
+	"track_lock_gap":60,
+	"max_upvote_points":100,
+	"max_downvote_points":100,
+	"upvote_slug":"upvote",
+	"downvote_slug":"downvote",
+	"upvote_max_limit_msg":"You can not give more than 100 points at a time.",
+	"downvote_max_limit_msg":"You can not deduct more than 100 points at a time.",
+	"polling_count_min_msg":"You can not add or deduct less than 1 point",
+	"boost_new_song_score_by":1,
+	"max_runtime_downloaded":7200,
+	"min_points_to_veriry_song" : 1000
+}

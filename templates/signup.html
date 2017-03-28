@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create new account</title>
+</head>
+<body>
+	<form action="/user/create" method="post">
+		<input type="text" name="name" placeholder="Name" required>
+		<input type="email" name="email" placeholder="Email" required>
+		<input type="password" name="password" placeholder="Password" required>
+		<input type="password" name="confirm_password" placeholder="Confirm password" required>
+		{% module xsrf_form_html() %}
+		<input type="submit" value="Create new account">
+	</form>
+</body>
+</html>
