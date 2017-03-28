@@ -130,11 +130,8 @@ function poll_action(e, action){
 	
 	var songid = e.getAttribute("songid");
 	var token = e.getAttribute("token");
-	alert(token);
+
 	var upbote_points=10;
-	// var cs = document.defaultView.getComputedStyle(e,null);
-	// var color = cs.getPropertyValue('color');
-	// alert(color);
 	var url =baseurl+"/radio/playlist/polling?type="+action+"&songid="+songid+"&token="+token+"&count="+upbote_points;
 	$.ajax({
 		url:url,

@@ -303,6 +303,16 @@ wave::scrollbar-thumb
 	border-right: 1px solid #dbdbdb;
 	height: 100%;
 }
+.add-song-img{
+	position: absolute;
+	width: 54px !important;
+	height: 54px !important;
+	margin-top: -30px;
+}
+
+
+
+
 
 /* refresh icon */
 .glyphicon-refresh-animate {

@@ -10,12 +10,13 @@ executor = concurrent.futures.ThreadPoolExecutor(8)
 class AddNewSong(BaseHandler):
 	@tornado.web.authenticated
 	def get(self, catid):
-		self.render("add_song.html")
+		category = self.db.get("SELECT * FROM category WHERE id=%s", catid)
+		self.render("add_song.html", category=category)
 
 	@tornado.web.authenticated
 	def post(self, catid):
 		self.catid = int(catid)
-		result = {}
+		result = {"error":None, "success":None}
 
 		# if not self.get_secure_cookie("user"):
 		# 	result["error"] = "User not logged in"
@@ -29,7 +30,7 @@ class AddNewSong(BaseHandler):
 			if error:
 				result["error"] = error
 			else:
-				result["success"] = "Song is added successfully"
+				result["success"] = "Song submitted successfully, will be added soon."
 				executor.submit(self._processSong)
 				#self.write('request accepted')
 

@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title></title>
+    <title>Grudio - Add Song</title>
+    <link rel="stylesheet" href="{{ static_url("css/vendor/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ static_url("css/add_song.css") }}" rel="stylesheet">
 </head>
+
 <body>
-<form action="#" method="POST">
-	<input type="text" name="name">
-	<input type="text" name="url">
-	{% module xsrf_form_html() %}
-	<input type="submit" name="Add song">
-</form>
+    <div id="header-wrapper">
+        <img class="header-logo" src="{{ static_url("images/groudio_logo.png") }}" alt="Groudio">
+        <div id="user-profile-wrapper">
+            <img class="user-profile-pic" src="{{ static_url("images/default-user.png") }}" alt="Groudio">
+        </div>
+    </div>
+
+
+
+    <div class="container form-wrapper">
+    	<div id="alert" class="alert" role="alert"></div>
+        <h2>Add song for <span class="c-name">{{category.name}}</span> category</h2>
+        <form id="form" name="form" class="form-signin">
+            <div class="form-group">
+                <input class="form-control" type="text" name="name" id="name" placeholder="Title" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="url" id="url" placeholder="Song url from YouTube" required>
+            </div>
+            {% module xsrf_form_html() %}
+            <div class="form-group">
+                <input class="form-control" type="submit" value="Add song" id="submit">
+            </div>
+        </form>
+    </div>
+
+
+
+    <script src="{{ static_url("js/vendor/jquery.min.js") }}"></script>
+    <script src="{{ static_url("js/add_song.js") }}"></script>
 </body>
+
 </html>

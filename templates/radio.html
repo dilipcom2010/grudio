@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Grudio - crowdsource radio</title>
 	<!-- <link rel="stylesheet" href="{{ static_url("css/vendor/bootstrap.min.css") }}" rel="stylesheet"> -->
 	<!-- <link rel="stylesheet" href="{{ static_url("css/bootstrap.min.css") }}" rel="stylesheet"> -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"> -->
@@ -12,7 +12,7 @@
 	<div id="header-wrapper">
 		<img class="header-logo" src="{{ static_url("images/groudio_logo.png") }}" alt="Groudio">
 		<div id="user-profile-wrapper">
-			<img class="user-profile-pic" src="https://cdn-images-1.medium.com/fit/c/40/40/0*UY17TkCtl-VMbXHX.jpeg" alt="Groudio">
+			<img class="user-profile-pic" src="{{ static_url("images/default-user.png") }}" alt="Groudio">
 		</div>
 	</div>
 	<div class="container-fluid">
@@ -59,19 +59,31 @@
 								</div>
 							</div>
 							<div id="ps-wrapper" class="col-xs-12 player-wrapper">
-								<div id="ps-thumbnail" class="song-img-wrapper"></div>
-								<div class="song-desc-wrapper">
-									<h5 id="ps-name"></h5>
-									<h6 id="ps-added-by"></h6>
+								<div class="col-xs-9" style="padding:0px">
+									<div id="ps-thumbnail" class="song-img-wrapper"></div>
+									<div class="song-desc-wrapper">
+										<h5 id="ps-name"></h5>
+										<h6 id="ps-added-by"></h6>
+									</div>
 								</div>
-								<!-- <div class="like-dislike">
-									<span class="glyphicon glyphicon-thumbs-up like-btn"></span>
-									<span class="vl"></span>
-									<span class="glyphicon glyphicon-thumbs-down dislike-btn"></span>
-								</div> -->
+								<div class="col-xs-1">
+									<a href="/songs/addNew/{{channelid}}" target="_blank">
+										<img class="add-song-img" src="{{ static_url("images/add_new_song.png") }}">
+									</a>
+								</div>
+								<div class="col-xs-2">
+									<!-- <div class="like-dislike">
+										<span class="glyphicon glyphicon-thumbs-up like-btn"></span>
+										<span class="vl"></span>
+										<span class="glyphicon glyphicon-thumbs-down dislike-btn"></span>
+									</div> -->
+								</div>
+
 							</div>
 						</div>
-						<div class="col-md-3">ad</div>
+						<div class="col-md-3 adv-wrapper">
+							<img src="{{ static_url("images/mic_img.png") }}">
+						</div>
 					</div>
 				</div>
 			</div>
