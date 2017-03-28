@@ -5,7 +5,9 @@ from traceback import format_exc
 
 
 class Home(BaseHandler):
-	def get(self, category_slug, category_id):
+	def get(self, category_slug=None, category_id=None):
+		if not category_id:
+			category_id = 1
 		categories = []
 		recent_played_songs = []
 		

@@ -56,6 +56,7 @@ class Application(tornado.web.Application, AppHelper):
 			(r"/songs/verify", songs.OnSongVerify),
 			(r'/songs/(.*)', tornado.web.StaticFileHandler, {'path': songs_path}),
 			(r"/radio/([a-z-]+)/([0-9]+)", radio.Home),
+			(r"/radio", radio.Home),
 			(r"/radio/playlist", radio.Playlist),
 			(r"/radio/playlist/polling", radio.PlaylistPolling),
 		]
