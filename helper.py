@@ -75,7 +75,7 @@ class AppHelper:
 					redis_value["file_path"] = self.config[self.mode]["host"]+song["file_path"]
 					redis_value["thumbnail"] = song["thumbnail"]
 					redis_value["length"] = song["length"]
-					redis_value["token"] = song["access_token"]
+					redis_value["token"] = song["token"]
 
 					redis_data.append({"key":redis_key, "value":json.dumps(redis_value), "expiry":expiry})
 
