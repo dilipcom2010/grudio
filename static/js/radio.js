@@ -93,6 +93,7 @@ function getSong(callback){
 	$.ajax({
 		url:url,
 		type:"GET",
+		crossDomain: true,
 		dataType: "json",
 		contentType: "application/json; charset=utf-8",
 		cache: false,
@@ -133,6 +134,7 @@ function poll_action(e, action){
 		url:url,
 		type:"GET",
 		dataType: "json",
+		crossDomain: true,
 		contentType: "application/json; charset=utf-8",
 		cache: false,
 		success: function(data){
