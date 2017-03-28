@@ -159,3 +159,11 @@ function poll_action(e, action){
 		}
 	});
 }
+
+
+// to mute and unmute sound
+function toggleSound(upid, offid, makesoundup){
+	document.getElementById(upid).style.display="none";
+	document.getElementById(offid).style.display="block";
+	wavesurfer.setMute(makesoundup);
+}

@@ -17,7 +17,7 @@ class Home(BaseHandler):
 		sql = "SELECT id, user_id, name, length, file_path, thumbnail, access_token as token FROM `songs` WHERE category_id=%s and status='played' and last_played IS NOT NULL ORDER BY last_played DESC LIMIT 1, 30"
 		recent_played_songs = self.db.query(sql, category_id)
 
-		self.render("radio.html", categories=categories, recent_played_songs=recent_played_songs, channelid=category_id)
+		self.render("radio.html", categories=categories, recent_played_songs=recent_played_songs, channelid=int(category_id))
 
 
 

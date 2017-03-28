@@ -32,7 +32,27 @@
 
 					<ul class="nav nav-sidebar">
 						{% for category in categories %}
+							{% if category.id == channelid %}
+							<li>
+								<div class="bar-c">
+									<div id="bar-1" class="bar"></div>
+									<div id="bar-2" class="bar"></div>
+									<div id="bar-3" class="bar"></div>
+									<div id="bar-4" class="bar"></div>
+									<div id="bar-5" class="bar"></div>
+									<div id="bar-6" class="bar"></div>
+								</div>
+								<a href="/radio/{{category.slug}}/{{category.id}}">
+								{{category.name}}</a>
+							</li>
+							{% end %}
+							
+						{% end %}
+						{% for category in categories %}
+							{% if category.id != channelid %}
 							<li><a href="/radio/{{category.slug}}/{{category.id}}">{{category.name}}</a></li>
+							{% end %}
+							
 						{% end %}
 					</ul>
 				</div>
@@ -77,6 +97,10 @@
 										<span class="vl"></span>
 										<span class="glyphicon glyphicon-thumbs-down dislike-btn"></span>
 									</div> -->
+									<div class="sound-wrapper">
+										<span id="sound-up" class="glyphicon glyphicon-volume-up" onclick="toggleSound('sound-up', 'sound-off', true)"></span>
+										<span id="sound-off" class="glyphicon glyphicon-volume-off" onclick="toggleSound('sound-off', 'sound-up', false)"></span>
+									</div>
 								</div>
 
 							</div>
