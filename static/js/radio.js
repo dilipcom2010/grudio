@@ -51,9 +51,10 @@ function initializeRadio(){
 }
 
 function playSong(song){
-	if(song.file_path){
-		wavesurfer.load(song.file_path);
+	if(!song){
+		return 0;
 	}
+	wavesurfer.load(song.file_path);
 	
 	document.getElementById("ps-name").innerHTML = song.name;
 	document.getElementById("ps-added-by").innerHTML = "<i>-added by</i> "+song.added_by;
