@@ -11,7 +11,11 @@ class AddNewSong(BaseHandler):
 	@tornado.web.authenticated
 	def get(self, catid):
 		category = self.db.get("SELECT * FROM category WHERE id=%s", catid)
-		self.render("add_song.html", category=category)
+		if not category:
+			self.set_status(400)
+			self.finish("<html><body>Sorry this channel not available</body></html>")
+		else:
+			self.render("add_song.html", category=category)
 
 	@tornado.web.authenticated
 	def post(self, catid):
