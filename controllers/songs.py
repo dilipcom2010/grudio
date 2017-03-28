@@ -77,7 +77,9 @@ class AddNewSong(BaseHandler):
 		os.rename(old_file, new_file)
 
 
-		data["name"] = self.get_argument("name")
+		data["name"] = self.get_argument("name", None)
+		if not data["name"]:
+			data["name"] = p.title
 		data["audioid"] = p.videoid
 		data["initial_score"] = initial_score
 		data["category_id"] = self.catid
@@ -142,10 +144,8 @@ class AddNewSong(BaseHandler):
 
 
 	def _needdToAddSong(self, audioid):
-		name = self.get_argument("name")
-		
 		try:
-			if self.db.get("SELECT * FROM songs WHERE (audioid=%s OR name=%s) AND category_id=%s LIMIT 1", audioid, name, self.catid):
+			if self.db.get("SELECT * FROM songs WHERE audioid=%s AND category_id=%s LIMIT 1", audioid, self.catid):
 				return False
 		except:
 			print format_exc()
@@ -157,12 +157,11 @@ class AddNewSong(BaseHandler):
 	def _validateInput(self):
 		loggedin_user = self.get_secure_cookie("user")
 		songUrl = self.get_argument("url", None)
-		songName = self.get_argument("name", None)
 
 		error = False
 		try:
-			if not songUrl or not songName:
-				return "URL or Name of song or category can not be empty"
+			if not songUrl:
+				return "URL of song or category can not be empty"
 		except:
 			return "Invalid input"
 
