@@ -77,6 +77,7 @@ class Login(BaseHandler):
 		
 		if hashed_password == user.password:
 			self.set_secure_cookie("user", str(user.id))
+			self.set_secure_cookie("admin", str(user.admin))
 			self.redirect(self.get_argument("next", "/"))
 		else:
 			self.render("login.html", error="incorrect password")
@@ -87,4 +88,5 @@ class Login(BaseHandler):
 class Logout(BaseHandler):
 	def get(self):
 		self.clear_cookie("user")
+		self.clear_cookie("admin")
 		self.redirect(self.get_argument("next", "/"))

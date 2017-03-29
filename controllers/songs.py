@@ -118,28 +118,30 @@ class AddNewSong(BaseHandler):
 
 		try:
 			v = pafy.new(self.get_argument("url", None))
-
-			ytube_category = v.category
-			if ytube_category.upper() != "MUSIC":
-				error = "Plese add MUSIC category only."
-				return error
-
-			if v.length < self.config["song_min_length"] or v.length > self.config["song_max_length"]:
-				error = "song length should be between %s min to %s min" % (self.config["song_min_length"]/60, self.config["song_max_length"]/60)
-				return error
-			
-			if v.likes >= self.config["likes_limit"] and v.dislikes >= self.config["dislike_limit"]:
-				if (v.dislikes*100)/v.likes >= self.config["song_hate_ratio"]:
-					error = "Song is not satisfying the popuraliry ratio"
-					return error
-
-			
-			if self.user_already_added_song(v.videoid):
-				error = "You have already added this song. Please visit profile section to check it."
-				return error
+			isAdmin = int(self.get_secure_cookie("admin"))
 
 			if not self._needdToAddSong(v.videoid):
 				return "Song is already added in this category"
+
+			if not isAdmin:
+				ytube_category = v.category
+				if ytube_category.upper() != "MUSIC":
+					error = "Plese add MUSIC category only."
+					return error
+
+				if v.length < self.config["song_min_length"] or v.length > self.config["song_max_length"]:
+					error = "song length should be between %s min to %s min" % (self.config["song_min_length"]/60, self.config["song_max_length"]/60)
+					return error
+				
+				if v.likes >= self.config["likes_limit"] and v.dislikes >= self.config["dislike_limit"]:
+					if (v.dislikes*100)/v.likes >= self.config["song_hate_ratio"]:
+						error = "Song is not satisfying the popuraliry ratio"
+						return error
+
+				
+				if self.user_already_added_song(v.videoid):
+					error = "You have already added this song. Please visit profile section to check it."
+					return error
 		
 		except:
 			error = "URL not valid"
