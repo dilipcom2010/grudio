@@ -118,7 +118,11 @@ class AddNewSong(BaseHandler):
 
 		try:
 			v = pafy.new(self.get_argument("url", None))
-			isAdmin = int(self.get_secure_cookie("admin"))
+			isAdmin = self.get_secure_cookie("admin")
+			if isAdmin:
+				isAdmin = int(isAdmin)
+			else:
+				isAdmin = 0
 
 			if not self._needdToAddSong(v.videoid):
 				return "Song is already added in this category"
@@ -144,6 +148,8 @@ class AddNewSong(BaseHandler):
 					return error
 		
 		except:
+			print format_exc()
+			print "here is problem"
 			error = "URL not valid"
 
 		return error
